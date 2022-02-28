@@ -5,7 +5,7 @@ import os
 
 
 class Plotly(InDriver):
-    """ Plot generator lib"""
+    """Plot generator lib"""
 
     __css_base = ".modebar {display: none;} \n.modebar-container {display: none;} "
 
@@ -43,7 +43,7 @@ class Plotly(InDriver):
             if selector:
                 json["screenshot"]["selector"] = selector
             req = requests.post(
-                url=f"{os.environ.get('SCREENSHOT_API', 'http://naas-screenshot:9000')}/api/render", # Sensitive
+                url=f"{os.environ.get('SCREENSHOT_API', 'http://naas-screenshot:9000')}/api/render",  # Sensitive
                 json=json,
             )
             req.raise_for_status()
@@ -57,7 +57,7 @@ class Plotly(InDriver):
         print(f"Saved as {filename}")
 
     def export(self, chart, filenames, css=None):
-        """ create html export and add css to it"""
+        """create html export and add css to it"""
         if isinstance(filenames, list):
             for filename in filenames:
                 self.__export(chart, filename, css)
@@ -239,7 +239,7 @@ class Plotly(InDriver):
         filter_title="Stock",
         filter_all=False,
     ):
-        """ generate financial_chart """
+        """generate financial_chart"""
         stock_data_copy = stock_data.copy()
         if "Company" not in stock_data_copy:
             stock_data_copy["Company"] = "Company_1"
@@ -340,7 +340,7 @@ class Plotly(InDriver):
     def table(
         self, header_values, cells_values, header_color="rgb(136,233,175)", show=False
     ):
-        """ generate table html """
+        """generate table html"""
 
         fig = go.Figure(
             data=[
