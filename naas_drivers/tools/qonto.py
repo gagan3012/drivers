@@ -5,6 +5,7 @@ import os
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 from naas_drivers.tools.emailbuilder import EmailBuilder
+
 emailbuilder = EmailBuilder()
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -478,7 +479,7 @@ class Statements(Transactions):
             "footer_cs": emailbuilder.footer_company(naas=True),
         }
         # Generate email in html
-        email_content = emailbuilder.generate(display='iframe', **content)
+        email_content = emailbuilder.generate(display="iframe", **content)
         return email_content
 
 

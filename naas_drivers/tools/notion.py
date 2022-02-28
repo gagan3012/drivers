@@ -11,6 +11,7 @@ VERSION = "2021-08-16"
 CONNECT
 """
 
+
 class Notion(InDriver, OutDriver):
     def connect(self, token: str):
 
@@ -20,11 +21,11 @@ class Notion(InDriver, OutDriver):
             "Notion-Version": f"{VERSION}",
             "Content-Type": "application/json",
         }
-        
+
         # Create a page and database
         self.page = Page(self.headers)
-        self.database = Database(self.headers) 
-        
+        self.database = Database(self.headers)
+
         self.block = Blocks()
 
         # Set connexion to active
@@ -32,10 +33,10 @@ class Notion(InDriver, OutDriver):
         return self
 
 
-
 """
 REQUEST
 """
+
 
 def catch_error(response):
     try:
@@ -117,11 +118,13 @@ class RequestBlock(RequestNotionAPI):
         response = requests.delete(url, headers=self.headers)
         catch_error(response)
         print("🌪 Block has been deleted")
-        
+
+
 """
 Property
 """
-        
+
+
 class Property:
     """An object describing by an id, type, and value of a page property."""
 
@@ -210,40 +213,41 @@ class Property:
             else:
                 raise TypeError(f"{self.type} must be a string or a list of string")
 
-            
+
 """
 BLOCK
 """
+
+
 class Blocks:
-    
     def heading1(self, text):
         return Heading1.create(text)
-    
+
     def heading2(self, text):
         return Heading2.create(text)
-    
+
     def heading3(self, text):
         return Heading3.create(text)
-    
+
     def paragraph(self, text):
         return Paragraph.create(text)
-    
+
     def bulleted_list_item(self, text):
         return BulletedList.create(text)
-    
+
     def numbered_list_item(self, text):
         return NumberedList.create(text)
-    
+
     def to_do(self, text):
         return ToDo.create(text)
-    
+
     def child_page(self, text):
         return ChildPage.create(text)
-    
+
     def embed(self, url):
         return Embed.create(url)
 
-        
+
 class BlockObject(ABC):
     type = None
 
@@ -407,6 +411,7 @@ def insert_block(block_object, value):
 PAGE
 """
 
+
 class PageProperties:
     def __init__(self, properties: Dict, headers: Dict):
         self.headers = headers
@@ -474,15 +479,17 @@ class PageContent:
     def update(self):
         # TODO
         pass
-    
+
+
 """
 LOW CODE OBJECT
 """
 
+
 class Database:
-    def __init__(self, headers) -> None: 
+    def __init__(self, headers) -> None:
         self.headers = headers
-    
+
     def get(self, database_url) -> None:
         self.url = database_url
         return self
@@ -502,11 +509,10 @@ class Database:
         return Page(self.headers).get(raw_page["url"])
 
 
-
 class Page:
     def __init__(self, headers) -> None:
         self.headers = headers
-        
+
     def get(self, page_url: str):
         self.url = page_url
         self.id = page_url.split("-")[-1]
@@ -533,4 +539,3 @@ class Page:
     def delete(self):
         """Archiving workspace level pages via API not supported."""
         RequestBlock(self.headers, self.id).delete()
-  

@@ -12,7 +12,7 @@ class Yahoofinance(InDriver):
         interval="1d",
         moving_averages=[],
     ):
-        """ generate financial data """
+        """generate financial data"""
         if isinstance(stock_companies, str):
             stock_companies = [stock_companies]
         if isinstance(date_from, int) and date_from < 0:
